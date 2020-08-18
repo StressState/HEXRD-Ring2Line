@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1088</width>
+    <height>467</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="frame_exppara">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>291</width>
+      <height>361</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <widget class="QWidget" name="gridLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>251</width>
+       <height>311</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_exppara">
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_sample2detector">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p style='line-height:50%'&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;探测器距离（毫米）&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(Sample to Detector)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_wavelength">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p style='line-height:50%'&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;光束波长(埃)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(WaveLength)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_detectortiltrotation">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p style='line-height:50%'&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;探测器倾斜方向(度)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(Detector tilt rotation)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_beamcenterx">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p style='line-height:50%'&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;光束中心 X&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(Beam Center X)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_beamcentery">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p style='line-height:50%'&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;光束中心 Y&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(Beam Center Y)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineedit_beamcenterx"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="lineedit_beamcentery"/>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="lineedit_wavelength"/>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="lineedit_sample2detector"/>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="lineedit_detectortiltrotation"/>
+      </item>
+      <item row="8" column="1">
+       <widget class="QLineEdit" name="lineedit_detectortiltangle"/>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_detectortiltangle">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p style='line-height:50%'&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;探测器倾斜角度(度)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(Detector tilt angle)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QLabel" name="label_exppara">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;实验修正参数&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_processpara">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>60</y>
+      <width>291</width>
+      <height>361</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="gridLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>251</width>
+       <height>311</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_processpara">
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="lineedit_innerradius"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineedit_firstazimuthangle">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_outerradius">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p style='line-height:50%'&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;积分终止半径(像素)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(Outer radius)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_savefilename">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p style='line-height:50%'&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;保存文件夹名称&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(Save in folder)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_firstazimuthangle">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p style='line-height:50%'&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;积分初始角度(度)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;First azimuth angle)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_lastazimuthangle">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p style='line-height:50%'&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;积分终止角度(度)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Last azimuth angle)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="lineedit_outerradius"/>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="lineedit_savefilename">
+        <property name="text">
+         <string>Ring2Line</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="lineedit_lastazimuthangle">
+        <property name="text">
+         <string>360</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_innerradius">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p style='line-height:50%'&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;积分起始半径(像素)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(Inner radius)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QLabel" name="label_processpara">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;积分处理参数&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>591</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_datapath">
+     <item>
+      <widget class="QLabel" name="label_datapath">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;数据文件夹路径&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineedit_datapath"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGraphicsView" name="graphicsview_intergratepic">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>20</y>
+      <width>451</width>
+      <height>341</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>370</y>
+      <width>451</width>
+      <height>47</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_displaycontrol">
+     <item row="2" column="1">
+      <widget class="QCheckBox" name="check_scale">
+       <property name="text">
+        <string>显示标尺</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QCheckBox" name="check_preview">
+       <property name="text">
+        <string>显示预览</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QCheckBox" name="check_color">
+       <property name="text">
+        <string>彩色模式</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="4">
+      <widget class="QScrollBar" name="Hbar_intensity">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="value">
+        <number>49</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
+      <widget class="QLabel" name="label_intensity">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>显示调节</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="5">
+      <layout class="QHBoxLayout" name="horizontalLayout_processtimer">
+       <item>
+        <widget class="QLabel" name="label_processtimer">
+         <property name="text">
+          <string>出图进度</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QProgressBar" name="progressBar_processtimer">
+         <property name="value">
+          <number>0</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1088</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_file">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="list_openfile"/>
+    <addaction name="list_inputpara"/>
+    <addaction name="list_outputpara"/>
+   </widget>
+   <widget class="QMenu" name="menu_proccess">
+    <property name="title">
+     <string>处理</string>
+    </property>
+    <addaction name="list_runtest"/>
+    <addaction name="list_run"/>
+    <addaction name="list_runoutputpictest"/>
+    <addaction name="list_runoutputpic"/>
+   </widget>
+   <addaction name="menu_file"/>
+   <addaction name="menu_proccess"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="list_openfile">
+   <property name="text">
+    <string>打开数据文件夹</string>
+   </property>
+  </action>
+  <action name="list_inputpara">
+   <property name="text">
+    <string>导入处理参数</string>
+   </property>
+  </action>
+  <action name="list_outputpara">
+   <property name="text">
+    <string>导出处理参数</string>
+   </property>
+  </action>
+  <action name="list_runtest">
+   <property name="text">
+    <string>单张积分测试</string>
+   </property>
+  </action>
+  <action name="list_run">
+   <property name="text">
+    <string>批量处理积分</string>
+   </property>
+  </action>
+  <action name="list_runoutputpictest">
+   <property name="text">
+    <string>测试出图</string>
+   </property>
+  </action>
+  <action name="list_runoutputpic">
+   <property name="text">
+    <string>批量出图</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>lineedit_datapath</tabstop>
+  <tabstop>lineedit_beamcenterx</tabstop>
+  <tabstop>lineedit_beamcentery</tabstop>
+  <tabstop>lineedit_wavelength</tabstop>
+  <tabstop>lineedit_sample2detector</tabstop>
+  <tabstop>lineedit_detectortiltrotation</tabstop>
+  <tabstop>lineedit_detectortiltangle</tabstop>
+  <tabstop>lineedit_firstazimuthangle</tabstop>
+  <tabstop>lineedit_lastazimuthangle</tabstop>
+  <tabstop>lineedit_innerradius</tabstop>
+  <tabstop>lineedit_outerradius</tabstop>
+  <tabstop>lineedit_savefilename</tabstop>
+  <tabstop>check_color</tabstop>
+  <tabstop>check_scale</tabstop>
+  <tabstop>check_preview</tabstop>
+  <tabstop>graphicsview_intergratepic</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>check_preview</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>graphicsview_intergratepic</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>802</x>
+     <y>422</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>835</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
