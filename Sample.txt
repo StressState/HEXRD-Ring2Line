@@ -41,4 +41,4 @@ YES
 # Pause (ON or OFF), Note that in case of errors, it is better to have pause ON so you have time to read the error!
 OFF
 # Run number, this number or text(!) will be at the end of the subdirectory name to separate different runs
-Horizontal_right
+Ring2Line

@@ -10,10 +10,17 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
+from Gui_macpreview import MacWindow
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.initUI()
+        global macpara_list #定义Fit2D的核心mac文件为全局
+        macpara_list = open('./Sample.txt').readlines()
+        global lastdir #记住上次选择的路径
+        lastdir = "./"
+        self.mainGUI = self.initUI()
+
 
 
 
@@ -71,19 +78,19 @@ class MainWindow(QMainWindow):
         gridLayout_exppara.addWidget(label_detectortiltrotation, 5, 0, 1, 1)
         gridLayout_exppara.addWidget(label_detectortiltangle, 6, 0, 1, 1)
 
-        lineedit_beamcenterx = QLineEdit()
-        lineedit_beamcentery = QLineEdit()
-        lineedit_wavelength = QLineEdit()
-        lineedit_sample2detector = QLineEdit()
-        lineedit_detectortiltrotation = QLineEdit()
-        lineedit_detectortiltangle = QLineEdit()
+        self.lineedit_beamcenterx = QLineEdit()
+        self.lineedit_beamcentery = QLineEdit()
+        self.lineedit_wavelength = QLineEdit()
+        self.lineedit_sample2detector = QLineEdit()
+        self.lineedit_detectortiltrotation = QLineEdit()
+        self.lineedit_detectortiltangle = QLineEdit()
 
-        gridLayout_exppara.addWidget(lineedit_beamcenterx, 1, 1, 1, 1)
-        gridLayout_exppara.addWidget(lineedit_beamcentery, 2, 1, 1, 1)
-        gridLayout_exppara.addWidget(lineedit_wavelength, 3, 1, 1, 1)
-        gridLayout_exppara.addWidget(lineedit_sample2detector, 4, 1, 1, 1)
-        gridLayout_exppara.addWidget(lineedit_detectortiltrotation, 5, 1, 1, 1)
-        gridLayout_exppara.addWidget(lineedit_detectortiltangle, 6, 1, 1, 1)
+        gridLayout_exppara.addWidget(self.lineedit_beamcenterx, 1, 1, 1, 1)
+        gridLayout_exppara.addWidget(self.lineedit_beamcentery, 2, 1, 1, 1)
+        gridLayout_exppara.addWidget(self.lineedit_wavelength, 3, 1, 1, 1)
+        gridLayout_exppara.addWidget(self.lineedit_sample2detector, 4, 1, 1, 1)
+        gridLayout_exppara.addWidget(self.lineedit_detectortiltrotation, 5, 1, 1, 1)
+        gridLayout_exppara.addWidget(self.lineedit_detectortiltangle, 6, 1, 1, 1)
 
         expparaconfirmbtn = QPushButton('确认')
         gridLayout_exppara.addWidget(expparaconfirmbtn, 7, 0, 1, 2)
@@ -120,22 +127,22 @@ class MainWindow(QMainWindow):
         gridLayout_processpara.addWidget(label_outerradius, 4, 0, 1, 1)
         gridLayout_processpara.addWidget(label_savefoldername, 5, 0, 1, 1)
 
-        lineedit_firstazimuthangle = QLineEdit()
-        lineedit_lastazimuthangle = QLineEdit()
-        lineedit_innerradius = QLineEdit()
-        lineedit_outerradius = QLineEdit()
-        lineedit_savefoldername = QLineEdit()
+        self.lineedit_firstazimuthangle = QLineEdit()
+        self.lineedit_lastazimuthangle = QLineEdit()
+        self.lineedit_innerradius = QLineEdit()
+        self.lineedit_outerradius = QLineEdit()
+        self.lineedit_savefoldername = QLineEdit()
 
             #设置默认值
-        lineedit_firstazimuthangle.setText('0')
-        lineedit_lastazimuthangle.setText('360')
-        lineedit_savefoldername.setText('Ring2Line')
+        self.lineedit_firstazimuthangle.setText('0')
+        self.lineedit_lastazimuthangle.setText('360')
+        self.lineedit_savefoldername.setText('Ring2Line')
 
-        gridLayout_processpara.addWidget(lineedit_firstazimuthangle, 1, 1, 1, 1)
-        gridLayout_processpara.addWidget(lineedit_lastazimuthangle, 2, 1, 1, 1)
-        gridLayout_processpara.addWidget(lineedit_innerradius, 3, 1, 1, 1)
-        gridLayout_processpara.addWidget(lineedit_outerradius, 4, 1, 1, 1)
-        gridLayout_processpara.addWidget(lineedit_savefoldername, 5, 1, 1, 1)
+        gridLayout_processpara.addWidget(self.lineedit_firstazimuthangle, 1, 1, 1, 1)
+        gridLayout_processpara.addWidget(self.lineedit_lastazimuthangle, 2, 1, 1, 1)
+        gridLayout_processpara.addWidget(self.lineedit_innerradius, 3, 1, 1, 1)
+        gridLayout_processpara.addWidget(self.lineedit_outerradius, 4, 1, 1, 1)
+        gridLayout_processpara.addWidget(self.lineedit_savefoldername, 5, 1, 1, 1)
 
         processparaconfirmbtn = QPushButton('确认')
         gridLayout_processpara.addWidget(processparaconfirmbtn, 6, 0, 1, 2)
@@ -175,18 +182,18 @@ class MainWindow(QMainWindow):
         graphicsview_intergratepic.setGeometry(QRect(610, 30, 451, 331))
 
         #Tab顺序
-        MainWindow.setTabOrder(self.lineedit_datapath, lineedit_beamcenterx)
-        MainWindow.setTabOrder(lineedit_beamcenterx, lineedit_beamcentery)
-        MainWindow.setTabOrder(lineedit_beamcentery, lineedit_wavelength)
-        MainWindow.setTabOrder(lineedit_wavelength, lineedit_sample2detector)
-        MainWindow.setTabOrder(lineedit_sample2detector, lineedit_detectortiltrotation)
-        MainWindow.setTabOrder(lineedit_detectortiltrotation, lineedit_detectortiltangle)
-        MainWindow.setTabOrder(lineedit_detectortiltangle, lineedit_firstazimuthangle)
-        MainWindow.setTabOrder(lineedit_firstazimuthangle, lineedit_lastazimuthangle)
-        MainWindow.setTabOrder(lineedit_lastazimuthangle, lineedit_innerradius)
-        MainWindow.setTabOrder(lineedit_innerradius, lineedit_outerradius)
-        MainWindow.setTabOrder(lineedit_outerradius, lineedit_savefoldername)
-        MainWindow.setTabOrder(lineedit_savefoldername, check_color)
+        MainWindow.setTabOrder(self.lineedit_datapath, self.lineedit_beamcenterx)
+        MainWindow.setTabOrder(self.lineedit_beamcenterx, self.lineedit_beamcentery)
+        MainWindow.setTabOrder(self.lineedit_beamcentery, self.lineedit_wavelength)
+        MainWindow.setTabOrder(self.lineedit_wavelength, self.lineedit_sample2detector)
+        MainWindow.setTabOrder(self.lineedit_sample2detector, self.lineedit_detectortiltrotation)
+        MainWindow.setTabOrder(self.lineedit_detectortiltrotation, self.lineedit_detectortiltangle)
+        MainWindow.setTabOrder(self.lineedit_detectortiltangle, self.lineedit_firstazimuthangle)
+        MainWindow.setTabOrder(self.lineedit_firstazimuthangle, self.lineedit_lastazimuthangle)
+        MainWindow.setTabOrder(self.lineedit_lastazimuthangle, self.lineedit_innerradius)
+        MainWindow.setTabOrder(self.lineedit_innerradius, self.lineedit_outerradius)
+        MainWindow.setTabOrder(self.lineedit_outerradius, self.lineedit_savefoldername)
+        MainWindow.setTabOrder(self.lineedit_savefoldername, check_color)
         MainWindow.setTabOrder(check_color, check_scale)
         MainWindow.setTabOrder(check_scale, check_preview)
 
@@ -217,13 +224,60 @@ class MainWindow(QMainWindow):
         check_preview.toggled['bool'].connect(graphicsview_intergratepic.setVisible)
         '''菜单栏信号'''
         menu_file_openfolder.triggered.connect(self.menu_file_openfolder_trigger)
+        menu_file_inputpara.triggered.connect(self.menu_file_inputpara_trigger)
+        menu_file_outputpara.triggered.connect(self.menu_file_outputpara_trigger)
+        menu_debug.triggered.connect(self.menu_debug_trigger)
 
     '''槽函数'''
     def menu_file_openfolder_trigger(self):
         '''菜单栏-文件-打开数据文件夹'''
-        datapath = QFileDialog.getExistingDirectory(self, "选取文件夹", "./")
+        global lastdir
+        datapath = QFileDialog.getExistingDirectory(self, "选取文件夹", lastdir)
+        if datapath == "":
+            return
+        lastdir = datapath
         #输入值给datapath文本框
         self.lineedit_datapath.setText(datapath)
+
+    def menu_file_inputpara_trigger(self):
+        '''菜单栏-文件-导入处理参数'''
+        global macpara_list, lastdir
+        parapath, paratpye = QFileDialog.getOpenFileName(self, "选取文件夹", lastdir)
+        if parapath == "":
+            return
+        lastdir = parapath
+        macpara_list = open(parapath).readlines()
+        #调整界面显示
+        self.lineedit_firstazimuthangle.setText(macpara_list[1])
+        self.lineedit_lastazimuthangle.setText(macpara_list[3])
+        self.lineedit_innerradius.setText(macpara_list[5])
+        self.lineedit_outerradius.setText(macpara_list[7])
+        self.lineedit_beamcenterx.setText(macpara_list[17])
+        self.lineedit_beamcentery.setText(macpara_list[19])
+        self.lineedit_wavelength.setText(macpara_list[21])
+        self.lineedit_sample2detector.setText(macpara_list[23])
+        self.lineedit_detectortiltrotation.setText(macpara_list[29])
+        self.lineedit_detectortiltangle.setText(macpara_list[31])
+        self.lineedit_savefoldername.setText(macpara_list[43])
+
+    def menu_file_outputpara_trigger(self):
+        global macpara_list, lastdir
+        parapath, paratype = QFileDialog.getSaveFileName(self, "输出处理参数", lastdir+"/Fit2D_para.txt", "*.txt")
+        if parapath == "":
+            return
+        lastdir = parapath
+        savefile = open(parapath, "w")
+        for line in macpara_list:
+            savefile.write(line)
+        savefile.close()
+
+    def menu_debug_trigger(self):
+        '''读取当前的macpara并显示在新窗口中'''
+        global macpara_list
+        macpara = ''.join(macpara_list) #转换list 为 str
+        self.macGUI = MacWindow(macpara)
+        self.macGUI.show()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
