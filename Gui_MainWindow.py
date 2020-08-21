@@ -11,6 +11,9 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
 from Gui_macpreview import MacWindow
+import Sys_Fit2D_process as fit2d
+
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -219,16 +222,40 @@ class MainWindow(QMainWindow):
 
         '''信号-槽调整'''
         '''实验参数信号'''
+        expparaconfirmbtn.clicked.connect(self.expparaconfirmbtn_click)
         '''处理参数信号'''
+        processparaconfirmbtn.clicked.connect(self.processparaconfirmbtn_clicked)
         '''显示控制信号'''
         check_preview.toggled['bool'].connect(graphicsview_intergratepic.setVisible)
         '''菜单栏信号'''
         menu_file_openfolder.triggered.connect(self.menu_file_openfolder_trigger)
         menu_file_inputpara.triggered.connect(self.menu_file_inputpara_trigger)
         menu_file_outputpara.triggered.connect(self.menu_file_outputpara_trigger)
+        menu_proccess_runtest.triggered.connect(self.menu_proccess_runtest_trigger)
+        menu_proccess_run.triggered.connect(self.menu_proccess_run_trigger)
         menu_debug.triggered.connect(self.menu_debug_trigger)
 
     '''槽函数'''
+    def expparaconfirmbtn_click(self):
+        global macpara_list
+        #读取的list元素中有回车符，先统一去掉再统一添加
+        macpara_list[17] = self.lineedit_beamcenterx.text().strip() +'\n'
+        macpara_list[19] = self.lineedit_beamcentery.text().strip() +'\n'
+        macpara_list[21] = self.lineedit_wavelength.text().strip() +'\n'
+        macpara_list[23] = self.lineedit_sample2detector.text().strip() +'\n'
+        macpara_list[29] = self.lineedit_detectortiltrotation.text().strip() +'\n'
+        macpara_list[31] = self.lineedit_detectortiltangle.text().strip() +'\n'
+
+    def processparaconfirmbtn_clicked(self):
+        global macpara_list
+        # 读取的list元素中有回车符，先统一去掉再统一添加
+        macpara_list[1] = self.lineedit_firstazimuthangle.text().strip() + '\n'
+        macpara_list[3] = self.lineedit_lastazimuthangle.text().strip() + '\n'
+        macpara_list[5] = self.lineedit_innerradius.text().strip() + '\n'
+        macpara_list[7] = self.lineedit_outerradius.text().strip() + '\n'
+        macpara_list[43] = self.lineedit_savefoldername.text().strip() + '\n'
+        macpara_list[9] = str(int(float(macpara_list[7])-float(macpara_list[5]))) + '\n'
+
     def menu_file_openfolder_trigger(self):
         '''菜单栏-文件-打开数据文件夹'''
         global lastdir
@@ -242,25 +269,26 @@ class MainWindow(QMainWindow):
     def menu_file_inputpara_trigger(self):
         '''菜单栏-文件-导入处理参数'''
         global macpara_list, lastdir
-        parapath, paratpye = QFileDialog.getOpenFileName(self, "选取文件夹", lastdir)
+        parapath, paratpye = QFileDialog.getOpenFileName(self, "选取文件夹", lastdir, "*.txt")
         if parapath == "":
             return
         lastdir = parapath
         macpara_list = open(parapath).readlines()
         #调整界面显示
-        self.lineedit_firstazimuthangle.setText(macpara_list[1])
-        self.lineedit_lastazimuthangle.setText(macpara_list[3])
-        self.lineedit_innerradius.setText(macpara_list[5])
-        self.lineedit_outerradius.setText(macpara_list[7])
-        self.lineedit_beamcenterx.setText(macpara_list[17])
-        self.lineedit_beamcentery.setText(macpara_list[19])
-        self.lineedit_wavelength.setText(macpara_list[21])
-        self.lineedit_sample2detector.setText(macpara_list[23])
-        self.lineedit_detectortiltrotation.setText(macpara_list[29])
-        self.lineedit_detectortiltangle.setText(macpara_list[31])
-        self.lineedit_savefoldername.setText(macpara_list[43])
+        self.lineedit_firstazimuthangle.setText(macpara_list[1].strip())
+        self.lineedit_lastazimuthangle.setText(macpara_list[3].strip())
+        self.lineedit_innerradius.setText(macpara_list[5].strip())
+        self.lineedit_outerradius.setText(macpara_list[7].strip())
+        self.lineedit_beamcenterx.setText(macpara_list[17].strip())
+        self.lineedit_beamcentery.setText(macpara_list[19].strip())
+        self.lineedit_wavelength.setText(macpara_list[21].strip())
+        self.lineedit_sample2detector.setText(macpara_list[23].strip())
+        self.lineedit_detectortiltrotation.setText(macpara_list[29].strip())
+        self.lineedit_detectortiltangle.setText(macpara_list[31].strip())
+        self.lineedit_savefoldername.setText(macpara_list[43].strip())
 
     def menu_file_outputpara_trigger(self):
+        '''菜单栏-文件-导出处理参数'''
         global macpara_list, lastdir
         parapath, paratype = QFileDialog.getSaveFileName(self, "输出处理参数", lastdir+"/Fit2D_para.txt", "*.txt")
         if parapath == "":
@@ -270,6 +298,17 @@ class MainWindow(QMainWindow):
         for line in macpara_list:
             savefile.write(line)
         savefile.close()
+
+    def menu_proccess_runtest_trigger(self):
+        global macpara_list
+        datapath = self.lineedit_datapath.text()
+        fit2d.cake(macpara_list,datapath,"ON")
+
+    def menu_proccess_run_trigger(self):
+        global macpara_list
+        datapath = self.lineedit_datapath.text()
+        fit2d.cake(macpara_list, datapath, "OFF")
+
 
     def menu_debug_trigger(self):
         '''读取当前的macpara并显示在新窗口中'''
