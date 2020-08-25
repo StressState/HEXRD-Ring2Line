@@ -9,6 +9,12 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+
 
 from Gui_macpreview import MacWindow
 import Sys_Fit2D_process as fit2d
@@ -19,7 +25,9 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         global macpara_list #定义Fit2D的核心mac文件为全局
+        global sprmatrix #定义读取的矩阵为全局
         macpara_list = open('./Sample.txt').readlines()
+        sprmatrix = mpimg.imread('未选择.png')
         global lastdir #记住上次选择的路径
         lastdir = "./"
         self.mainGUI = self.initUI()
@@ -156,7 +164,16 @@ class MainWindow(QMainWindow):
         gridLayout_displaycontrol = QGridLayout(gridLayout_displaycontrol_widget)
         gridLayout_displaycontrol.setContentsMargins(0, 0, 0, 0)
 
-        check_color = QCheckBox('彩色模式')
+        self.combobox_color = QComboBox()
+        self.combobox_color.addItems([
+            'Greys', 'Purples', 'Blues', 'Greens', 'Oranges', 'Reds',
+            'YlOrBr', 'YlOrRd', 'OrRd', 'PuRd', 'RdPu', 'BuPu',
+            'GnBu', 'PuBu', 'YlGnBu', 'PuBuGn', 'BuGn', 'YlGn',
+            'binary', 'gist_yarg', 'gist_gray', 'gray', 'bone', 'pink',
+            'spring', 'summer', 'autumn', 'winter', 'cool', 'Wistia',
+            'hot', 'afmhot', 'gist_heat', 'copper','PiYG', 'PRGn',
+            'BrBG', 'PuOr', 'RdGy', 'RdBu', 'RdYlBu', 'RdYlGn',
+            'Spectral', 'coolwarm', 'bwr', 'seismic'])
         check_scale = QCheckBox('显示标尺')
         check_preview = QCheckBox('显示预览')
         check_preview.setChecked(True)
@@ -174,15 +191,31 @@ class MainWindow(QMainWindow):
 
         gridLayout_displaycontrol.addWidget(label_processtimer, 1, 0, 1, 1)
         gridLayout_displaycontrol.addWidget(progressBar_processtimer, 1, 1, 1, 5)
-        gridLayout_displaycontrol.addWidget(check_color, 2, 0, 1, 1)
+        gridLayout_displaycontrol.addWidget(self.combobox_color, 2, 0, 1, 1)
         gridLayout_displaycontrol.addWidget(check_scale, 2, 1, 1, 1)
         gridLayout_displaycontrol.addWidget(check_preview, 2, 2, 1, 1)
         gridLayout_displaycontrol.addWidget(label_intensity, 2, 3, 1, 1)
         gridLayout_displaycontrol.addWidget(Hbar_intensity, 2, 4, 1, 2)
 
         #图像窗口
-        graphicsview_intergratepic = QGraphicsView(self)
-        graphicsview_intergratepic.setGeometry(QRect(610, 30, 451, 331))
+        vLayout_intergratepic_widget = QWidget(self)
+        vLayout_intergratepic_widget.setGeometry(QRect(610, 30, 451, 331))
+        vLayout_intergratepic = QVBoxLayout(vLayout_intergratepic_widget)
+        vLayout_intergratepic.setContentsMargins(0, 0, 0, 0)
+
+        self.figure = plt.figure()
+        self.figureaxes = self.figure.add_subplot(111)
+
+        self.figureaxesimg = self.figureaxes.imshow(sprmatrix)
+        plt.subplots_adjust(left=0,right=1,bottom=0,top=1)
+        print(dir(self.figureaxesimg))
+            #移除边框和坐标轴
+        self.figureaxes.set_axis_off()
+
+        self.intergratepic = FigureCanvas(self.figure)
+        toolbar = NavigationToolbar(self.intergratepic,vLayout_intergratepic_widget)
+        vLayout_intergratepic.addWidget(self.intergratepic)
+        vLayout_intergratepic.addWidget(toolbar)
 
         #Tab顺序
         MainWindow.setTabOrder(self.lineedit_datapath, self.lineedit_beamcenterx)
@@ -196,8 +229,8 @@ class MainWindow(QMainWindow):
         MainWindow.setTabOrder(self.lineedit_lastazimuthangle, self.lineedit_innerradius)
         MainWindow.setTabOrder(self.lineedit_innerradius, self.lineedit_outerradius)
         MainWindow.setTabOrder(self.lineedit_outerradius, self.lineedit_savefoldername)
-        MainWindow.setTabOrder(self.lineedit_savefoldername, check_color)
-        MainWindow.setTabOrder(check_color, check_scale)
+        MainWindow.setTabOrder(self.lineedit_savefoldername, self.combobox_color)
+        MainWindow.setTabOrder(self.combobox_color, check_scale)
         MainWindow.setTabOrder(check_scale, check_preview)
 
         #菜单布局
@@ -212,6 +245,7 @@ class MainWindow(QMainWindow):
         menu_file_openfolder = menu_file.addAction('打开数据文件夹')
         menu_file_inputpara = menu_file.addAction('导入处理参数')
         menu_file_outputpara = menu_file.addAction('导出处理参数')
+        menu_file_importspr = menu_file.addAction('导入.spr文件作图')
 
         menu_proccess_runtest = menu_proccess.addAction('单张积分测试')
         menu_proccess_run = menu_proccess.addAction('批量处理积分')
@@ -226,16 +260,19 @@ class MainWindow(QMainWindow):
         '''处理参数信号'''
         processparaconfirmbtn.clicked.connect(self.processparaconfirmbtn_clicked)
         '''显示控制信号'''
-        check_preview.toggled['bool'].connect(graphicsview_intergratepic.setVisible)
+        self.combobox_color.currentIndexChanged[str].connect(self.combobox_color_trigger)
+        check_preview.toggled['bool'].connect(self.intergratepic.setVisible)
         '''菜单栏信号'''
         menu_file_openfolder.triggered.connect(self.menu_file_openfolder_trigger)
         menu_file_inputpara.triggered.connect(self.menu_file_inputpara_trigger)
         menu_file_outputpara.triggered.connect(self.menu_file_outputpara_trigger)
+        menu_file_importspr.triggered.connect(self.menu_file_importspr_trigger)
         menu_proccess_runtest.triggered.connect(self.menu_proccess_runtest_trigger)
         menu_proccess_run.triggered.connect(self.menu_proccess_run_trigger)
         menu_debug.triggered.connect(self.menu_debug_trigger)
 
     '''槽函数'''
+    '''实验参数确认'''
     def expparaconfirmbtn_click(self):
         global macpara_list
         #读取的list元素中有回车符，先统一去掉再统一添加
@@ -245,7 +282,7 @@ class MainWindow(QMainWindow):
         macpara_list[23] = self.lineedit_sample2detector.text().strip() +'\n'
         macpara_list[29] = self.lineedit_detectortiltrotation.text().strip() +'\n'
         macpara_list[31] = self.lineedit_detectortiltangle.text().strip() +'\n'
-
+    '''处理参数确认'''
     def processparaconfirmbtn_clicked(self):
         global macpara_list
         # 读取的list元素中有回车符，先统一去掉再统一添加
@@ -256,6 +293,12 @@ class MainWindow(QMainWindow):
         macpara_list[43] = self.lineedit_savefoldername.text().strip() + '\n'
         macpara_list[9] = str(int(float(macpara_list[7])-float(macpara_list[5]))) + '\n'
 
+    def combobox_color_trigger(self,color):
+        global sprmatrix
+        self.figureaxes.imshow(sprmatrix,cmap=color)
+        self.intergratepic.draw()
+
+    '''菜单栏-文件-打开数据文件夹'''
     def menu_file_openfolder_trigger(self):
         '''菜单栏-文件-打开数据文件夹'''
         global lastdir
@@ -265,7 +308,7 @@ class MainWindow(QMainWindow):
         lastdir = datapath
         #输入值给datapath文本框
         self.lineedit_datapath.setText(datapath)
-
+    '''菜单栏-文件-导入处理参数'''
     def menu_file_inputpara_trigger(self):
         '''菜单栏-文件-导入处理参数'''
         global macpara_list, lastdir
@@ -286,7 +329,7 @@ class MainWindow(QMainWindow):
         self.lineedit_detectortiltrotation.setText(macpara_list[29].strip())
         self.lineedit_detectortiltangle.setText(macpara_list[31].strip())
         self.lineedit_savefoldername.setText(macpara_list[43].strip())
-
+    '''菜单栏-文件-导出处理参数'''
     def menu_file_outputpara_trigger(self):
         '''菜单栏-文件-导出处理参数'''
         global macpara_list, lastdir
@@ -298,18 +341,32 @@ class MainWindow(QMainWindow):
         for line in macpara_list:
             savefile.write(line)
         savefile.close()
+    '''菜单栏-文件-导入.spr文件作图'''
+    def menu_file_importspr_trigger(self):
+        global lastdir, sprmatrix
+        sprpath, sprtpye = QFileDialog.getOpenFileName(self, "选取文件夹", lastdir, "*.spr")
+        if sprpath == "":
+            return
+        lastdir = sprpath
+        sprmatrix = np.loadtxt(sprpath, skiprows=1)
+        plt.cla()
+        self.figureaxes.imshow(sprmatrix, cmap=self.combobox_color.currentText())
+        plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
+        self.figureaxes.set_axis_off()
+        self.intergratepic.draw()
 
+
+    '''单张积分测试'''
     def menu_proccess_runtest_trigger(self):
         global macpara_list
         datapath = self.lineedit_datapath.text()
         fit2d.cake(macpara_list,datapath,"ON")
-
+    '''批量处理积分'''
     def menu_proccess_run_trigger(self):
         global macpara_list
         datapath = self.lineedit_datapath.text()
         fit2d.cake(macpara_list, datapath, "OFF")
-
-
+    '''读取当前的macpara并显示在新窗口中'''
     def menu_debug_trigger(self):
         '''读取当前的macpara并显示在新窗口中'''
         global macpara_list
